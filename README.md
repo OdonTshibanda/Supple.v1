@@ -1,4 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a [Next.js](https://nextjs.org) frontend with a Django API for customer accounts and orders.
+
+## Run the app
+
+Install the backend dependencies once:
+
+```bash
+cd backend
+python -m pip install -r requirements.txt
+python manage.py migrate
+```
+
+Start Django in one terminal:
+
+```bash
+cd backend
+python manage.py runserver 8000
+```
+
+Start Next.js in another terminal:
+
+```bash
+npm run dev
+```
+
+Next.js proxies `/api/*` requests to Django, so the browser can call the API without a separate CORS setup. The proxy targets `http://127.0.0.1:8000` by default; set `BACKEND_URL` in the frontend environment when Django runs on another host.
+
+The account routes are `/signin`, `/signup`, `/auth/forgot`, and `/dashboard`. `/login` and `/auth/login` redirect to `/signin`. Django issues JWT access and refresh tokens; authenticated API calls use the access token and refresh it when it expires.
+
+Password reset emails use Django's console email backend by default, which prints the reset link in the Django terminal during local development. Set `FRONTEND_URL` and Django's `EMAIL_BACKEND`/SMTP environment variables to send reset emails in another environment.
 
 ## Getting Started
 

@@ -1,0 +1,92 @@
+{
+  // ---------------------------------------------------------------------
+  // Python interpreter
+  // .venv is the only environment that has Django + DRF + psycopg + JWT.
+  // Pinning it stops VS Code from guessing (you also have a stray "venv").
+  // ---------------------------------------------------------------------
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+  "python.terminal.activateEnvironment": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+
+  // ---------------------------------------------------------------------
+  // Make Pylance understand the Django layout.
+  // Pylance's root is this repo, but Django's root is backend/.
+  // Without this, imports like `from apps.users.models import User`
+  // and `from config.urls import ...` cannot be resolved -> no autocomplete.
+  // ---------------------------------------------------------------------
+  "python.analysis.extraPaths": ["${workspaceFolder}/backend"],
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.useLibraryCodeForTypes": true,
+
+  // ---------------------------------------------------------------------
+  // Autocomplete quality
+  // ---------------------------------------------------------------------
+  "python.analysis.indexing": true,
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.completeFunctionParens": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.diagnosticMode": "openFilesOnly",
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.packageIndexDepths": [
+    { "name": "django", "depth": 2 },
+    { "name": "rest_framework", "depth": 4 }
+  ],
+
+  // ---------------------------------------------------------------------
+  // Editor behaviour that actually drives Python suggestions
+  // ---------------------------------------------------------------------
+  "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "off",
+    "strings": "on"
+  },
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.tabCompletion": "on",
+  "editor.acceptSuggestionOnEnter": "on",
+  "editor.inlineSuggest.enabled": true,
+  "editor.wordBasedSuggestions": "currentDocument",
+
+  // ---------------------------------------------------------------------
+  // Django templates (extension: batisteo.vscode-django)
+  // ---------------------------------------------------------------------
+  "files.associations": {
+    "**/templates/**/*.html": "django-html",
+    "**/*.html": "html"
+  },
+  "emmet.includeLanguages": {
+    "django-html": "html"
+  },
+  "[django-html]": {
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    }
+  },
+
+  // ---------------------------------------------------------------------
+  // Keep the two venvs out of search / file watching.
+  // This repo also contains a large Next.js node_modules at the root.
+  // ---------------------------------------------------------------------
+  "files.watcherExclude": {
+    "**/.venv/**": true,
+    "**/venv/**": true,
+    "**/node_modules/**": true,
+    "**/__pycache__/**": true
+  },
+  "search.exclude": {
+    "**/.venv": true,
+    "**/venv": true,
+    "**/node_modules": true,
+    "**/__pycache__": true
+  },
+  "cursorpyright.analysis.autoImportCompletions": true,
+  "cursorpyright.analysis.autoSearchPaths": true,
+  "cursorpyright.analysis.diagnosticMode": "openFilesOnly",
+  "cursorpyright.analysis.extraPaths": [
+    "${workspaceFolder}/backend"
+  ],
+  "cursorpyright.analysis.inlayHints.functionReturnTypes": true,
+  "cursorpyright.analysis.typeCheckingMode": "basic",
+  "cursorpyright.analysis.useLibraryCodeForTypes": true
+}
